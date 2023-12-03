@@ -1,0 +1,26 @@
+#!/usr/bin/bpftrace --unsafe
+
+uprobe:$1:* {
+  $GREEN = "\033[32m";
+  $END = "\033[0m";
+
+  printf("%s> %s(0x%lx, 0x%lx, 0x%lx, 0x%lx, 0x%lx, 0x%lx)%s\n",
+    $GREEN, func, arg0, arg1, arg2, arg3, arg4, arg5, $END);
+}
+
+uretprobe:$1:* {
+  $PURPLE = "\033[35m";
+  $END = "\033[0m";
+
+  printf("%s< return = 0x%lx%s\n",
+    $PURPLE, retval, $END);
+}
+
+
+// https://github.com/iovisor/bpftrace/issues/2817
+// uprobe:libc:* {
+// }
+
+// alternative
+// uprobe:libc:* /strncmp(comm, str($2), 10) == 0/ {
+// }
