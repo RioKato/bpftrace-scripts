@@ -12,7 +12,7 @@ uretprobe:$1:* {
   $PURPLE = "\033[35m";
   $END = "\033[0m";
 
-  printf("%s< return = 0x%lx%s\n",
+  printf("%s< 0x%lx%s\n",
     $PURPLE, retval, $END);
 }
 
